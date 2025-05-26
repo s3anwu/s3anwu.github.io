@@ -12,12 +12,10 @@
   </head>
 
   <body>
-    <table style="width:100%;max-width:1000px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-      <tr style="padding:0px">
-        <td style="padding:0px">
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr style="padding:0px">
-              <td style="padding:2.5%;width:63%;vertical-align:middle">
+    <div style="width:100%;max-width:1000px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+
+          <header class="profile-header">
+              <div class="profile-text">
                 <p class="name" style="text-align: center;">
                   Sean Wu
                 </p>
@@ -25,7 +23,6 @@
                 I’m a Master’s student at <a href="https://www.ethz.ch">ETH Zurich</a>, specializing in computer vision and machine learning.
                 I currently work on neural rendering with <a href="https://people.ee.ethz.ch/~csakarid/">Dr. Christos Sakaridis</a> and <a href="https://vision.ee.ethz.ch/people-details.OTAyMzM=.TGlzdC8zMjg3LC0xOTcxNDY1MTc4.html">Prof. Luc Van Gool</a> at the <a href="https://www.vision.ee.ethz.ch">ETH Computer Vision Lab</a>.
                 Previously, I studied <a href="https://engsci.utoronto.ca/">Engineering Science</a> at the <a href="https://www.utoronto.ca">University of Toronto</a>, where I worked on perception for autonomous driving with <a href="https://starslab.ca/people/prof-jonathan-kelly/">Prof. Jonathan Kelly</a> and the <a href="https://www.autodrive.utoronto.ca/">aUToronto</a> self-driving car team.
-
                 </p>
                 <p>
                 Outside of research, I dabble in learning languages, running, and hiking.
@@ -36,15 +33,16 @@
                   <a href="https://github.com/s3anwu/">Github</a> &nbsp;/&nbsp;
                   <a href="https://www.linkedin.com/in/wu-sean/">Linkedin</a>
                 </p>
-              </td>
-              <td style="padding:2.5%;width:37%;max-width:37%">
-                <a href="images/profile.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%;" alt="profile photo" src="images/profile.jpg" class="hoverZoomLink"></a>
-              </td>
-            </tr>
-          </tbody></table>
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-              <tr>
-              <td style="padding:16px;width:100%;vertical-align:middle">
+              </div>
+              <div class="profile-image">
+                <a href="images/profile.jpg">
+                  <img alt="profile photo" src="images/profile.jpg" class="hoverZoomLink">
+                </a>
+              </div>
+          </header>
+
+          <div style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+              <div class="research-text">
                 <h2>Research</h2>
                 <p>
                 I’m broadly interested in the intersection of vision + graphics, particularly in 3D scene understanding and generation. My recent work focuses on neural rendering, multi-sensor perception, and visual inductive biases. I especially enjoy: (1) application-driven problems (e.g. photorealistic digital humans and autonomous driving) and (2) leveraging theory (e.g physics, graphics, optimization, etc) to guide data-driven learning.
@@ -52,17 +50,16 @@
                 <p>
                 * denotes equal contribution
                 </p>
-              </td>
-            </tr>
-          </tbody></table>
-          <table style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+              </div>
+          </div>
 
+          <div style="width:100%;border:0px;border-spacing:0px 10px;border-collapse:separate;margin-right:auto;margin-left:auto;">
 
-          <tr>
-              <td style="padding:16px;width:25%;vertical-align:middle">
-                <img src="images/pbrnerf_promo.png" alt="pbrnerf" width="250">
-              </td>
-              <td style="padding:8px;width:75%;vertical-align:middle">
+          <div class="paper">
+              <div class="paper-image">
+                <img src="images/pbrnerf_promo.png" alt="pbrnerf">
+              </div>
+              <div class="paper-text">
                 <a href="https://arxiv.org/abs/2412.09680">
                   <span class="papertitle">PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields</span>
                 </a>
@@ -73,11 +70,11 @@
                 <a href="https://vision.ee.ethz.ch/people-details.OTAyMzM=.TGlzdC8zMjg3LC0xOTcxNDY1MTc4.html">Luc Van Gool</a>,
                 <a href="https://people.ee.ethz.ch/~csakarid/">Christos Sakaridis</a>
                 <br>
-                <em>CVPR</em>, 2025
+                <em>IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong></em>, 2025
                 <br>
                 <a href="https://arxiv.org/abs/2412.09680">paper</a>
                 /
-                <a href="https://github.com/s3anwu/pbrnerf">project page</a>
+                <a href="https://arxiv.org/abs/2412.09680">project page</a>
                 /
                 <a href="https://github.com/s3anwu/pbrnerf">code</a>
                 <span style="display: inline-block; transform: translateY(-0.5px);">
@@ -95,15 +92,15 @@
                 <p>
                 Physics-based priors help constrain the ill-posed inverse rendering problem, allowing neural fields to more accurately estimate geometry, lighting, and BRDF-based materials.
                 </p>
-              </td>
-            </tr>
+              </div>
+          </div>
 
 
-          <tr>
-              <td style="padding:16px;width:25%;vertical-align:middle">
-                <img src="images/imlp_promo.png" alt="imlp" width="250">
-              </td>
-              <td style="padding:8px;width:75%;vertical-align:middle">
+          <div class="paper">
+              <div class="paper-image">
+                <img src="images/imlp_promo.png" alt="imlp">
+              </div>
+              <div class="paper-text">
                 <a href="https://arxiv.org/abs/2410.09655">
                   <span class="papertitle">Interpolated-MLPs: Controllable Inductive Bias</span>
                 </a>
@@ -120,16 +117,16 @@
                 <p>
                 We empirically study visual inductive biases by interpolating MLP weights with structured weight matrices (CNNs, MLP-Mixers) and measuring test performance.
                 </p>
-              </td>
-            </tr>
+              </div>
+          </div>
 
 
 
-          <tr>
-              <td style="padding:16px;width:25%;vertical-align:middle">
-                <img src="images/autolights_promo.jpg" alt="autolights" width="250">
-              </td>
-              <td style="padding:8px;width:75%;vertical-align:middle">
+          <div class="paper">
+              <div class="paper-image">
+                <img src="images/autolights_promo.jpg" alt="autolights">
+              </div>
+              <div class="paper-text">
                 <a href="https://arxiv.org/abs/2305.08673">
                   <span class="papertitle">aUToLights: A Robust Multi-Camera Traffic Light Detection and Tracking System</span>
                 </a>
@@ -147,24 +144,19 @@
                 <p>
                 Multiple cameras + CNNs + HD map + HMM filtering enable robust real-time traffic light perception for autonomous vehicles.
                 </p>
-              </td>
-            </tr>
+              </div>
+          </div>
 
 
-          </tbody></table>
-
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-              <td style="padding:0px">
+          <div style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+              <div style="padding:0px">
                 <br>
                 <p style="text-align:right;font-size:small;">
                   Thank you to <a href="https://jonbarron.info/">Jon Barron</a> for open-sourcing his website.
                 </p>
-              </td>
-            </tr>
-          </tbody></table>
-        </td>
-      </tr>
-    </table>
+              </div>
+          </div>
+
+    </div>
   </body>
 </html>
