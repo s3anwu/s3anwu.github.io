@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="PBR-NeRF: Inverse Rendering with Physics-Based Neural Fields">
+  <meta name="keywords" content="PBR-NeRF, Neural Rendering, Inverse Rendering, NeRF, 3D Reconstruction, Physics-Based Rendering, BRDF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Minimal MathJax -->
+  <!-- https://docs.mathjax.org/en/latest/web/configuration.html#loading-components-individually -->
+  <script>
+  MathJax = {
+    loader: {
+      load: ['input/tex-base', 'output/chtml']
+    },
+    tex: {
+      packages: ['base']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
+
+  <!-- Bootstrap -->
+  <link href="static/css/bootstrap-4.4.1.css" rel="stylesheet">
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./assets/icon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/video_comparison.js"></script>
+  <link rel="stylesheet" href="./static/css/dics.original.css">
+  <script src="./static/js/event_handler.js"></script>
+  <script src="./static/js/dics.original.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <!-- <div class="navbar-brand"> -->
+  <!--   <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"> -->
+  <!--     <span aria-hidden="true"></span> -->
+  <!--     <span aria-hidden="true"></span> -->
+  <!--     <span aria-hidden="true"></span> -->
+  <!--   </a> -->
+  <!-- </div> -->
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="..">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+<title>PBR-NeRF</title>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="gradient">PBR</span><span class="plain">-NeRF</span></h1>
+          <h2 class="title is-2 publication-title" style="margin-bottom: 0"><strong>Inverse Rendering with Physics-Based<br>Neural Fields</strong></h2>
+
+          <div class="column is-full_width">
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="..">Sean Wu</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/shamik-basu-1b998a85/">Shamik Basu</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://people.ee.ethz.ch/~timbr/">Tim Broedermann</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://vision.ee.ethz.ch/people-details.OTAyMzM=.TGlzdC8zMjg3LC0xOTcxNDY1MTc4.html">Luc Van Gool</a><sup>1,3</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://people.ee.ethz.ch/~csakarid/">Christos Sakaridis</a><sup>1</sup></span>
+          </div>
+
+          <!-- <br> -->
+
+          <div class="column is-full_width">
+            <h2 class="title is-4">CVPR 2025</h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>ETH Zurich</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>University Of Bologna</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>3</sup>INSAIT, Sofia University St. Kliment Ohridski</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2412.09680"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/s3anwu/pbrnerf"
+                   class="external-link button is-normal is-rounded is-dark disabled">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./assets/teaser.png" class="center">
+      <h2 class="subtitle has-text-centered" style="margin-top: 15px">
+        <b>PBR-NeRF uses <span class="gradient">physics-based losses</span> to fix baked-in specular highlights (highlighted areas) and recover realistic material and lighting.</b> <br>
+        <!-- <b>PBR-NeRF uses <span class="gradient">physics-based losses</span> to recover realistic materials and lighting.</b> <br> -->
+        <p class="has-text-left" style="font-size: 19px;">1. Enforces energy conservation by penalizing BRDFs that reflect more light than they receive.</p>
+        <p class="has-text-left" style="font-size: 19px;">2. Reduces baked-in specular highlights (highlighted areas) by promoting separate diffuse and specular lobes.</p>
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel" data-slides-to-show="4">
+        <div class="item">
+          <video poster="" id="scissor-rgb" autoplay controls muted loop height="100%">
+            <source src="assets/video/pbrnerf_dtu_scene_37_rgb.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item">
+          <video poster="" id="scissor-normals" autoplay controls muted loop height="100%">
+            <source src="assets/video/pbrnerf_dtu_scene_37_normals.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" id="scissor-roug" autoplay controls muted loop height="100%">
+            <source src="assets/video/pbrnerf_dtu_scene_37_roug.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" id="scissor-meta" autoplay controls muted loop height="100%">
+            <source src="assets/video/pbrnerf_dtu_scene_37_meta.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" id="scissor-base" autoplay controls muted loop height="100%">
+            <source src="assets/video/pbrnerf_dtu_scene_37_base.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+   	<div align="center">
+      Predicted novel views (RGB), normals, roughness, metallicness, and albedo from 49 input views and a point cloud.
+	</div>
+  <br>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- TL;DR -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3" style="margin-top: -30px">Summary</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li style="font-size:18px">PBR-NeRF uses physics-informed neural fields to solve the <span class="gradient">inverse rendering</span> problem: jointly estimating geometry, materials, and lighting from posed images.</li>
+            <li style="font-size:18px">Standard NeRF and 3DGS ignore light transport physics, treating scenes as black boxes that memorize view-dependent effects like reflections.</li>
+            <li style="font-size:18px">Inverse rendering enables realistic and editable scenes, but is highly ill-posed: infinite combos of materials, lighting, and geometry can generate the same image.</li>
+            <li style="font-size:18px"><strong>Our contribution</strong>: Physics-based priors make inverse rendering more accurate and tractable by enforcing (1) energy conservation in materials, and (2) separate diffuse and specular lobes to reduce baked-in highlights.</li>
+            <li style="font-size:18px"><strong>Results</strong>: State-of-the-art material estimation on NeILF++ and DTU benchmarks with same or better novel view synthesis quality</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px">Architecture</h2>
+
+        <img src="./assets/pipeline.png" class="center">
+
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
+            Jointly trained neural fields for <strong>geometry</strong> (NeRF SDF), <strong>materials</strong> (BRDF field), and <strong>lighting</strong> (NeILF) <br> &rArr; expressive differential renderer <br>
+            <span class="gradient">Conservation of Energy Loss \( \mathcal{L}_{\text{cons}} \)</span> and <span class="gradient">Specular Loss \( \mathcal{L}_{\text{spec}} \)</span> <br> &rArr; enforce physically correct rendering
+        </h2>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px">Physics-based Losses for Inverse Rendering</h2>
+
+        <img src="./assets/losses.png" class="center">
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+
+            Our physics-based losses constrain the material BRDF (and indirectly the lighting): <br>
+            1. <strong>Conservation of Energy Loss \( \mathcal{L}_{\text{cons}} \)</strong> supervises the full BRDF \( f_r = f_s + f_d \) (dotted envelope). <br>
+            2. <strong>Specular Loss \( \mathcal{L}_{\text{spec}} \)</strong> adjusts relative magnitudes of the <span style="color: red">specular \( f_s \)</span> and <span style="color: blue">diffuse \( f_d \)</span> lobes.
+        </h2>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Results. -->
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Inverse Rendering Results</h2>
+
+        <h3 class="title is-5">Material Estimation</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            The BRDF field predicts albedo, metallicness, and roughness using the Disney BRDF.
+            Predicted materials can be extracted, edited, or re-rendered under different lighting.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="material-estimation" style="font-size: 0.80rem;">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="materialEstimationEvent(0)">City</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(1)">Studio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(2)">Castel</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(3)">City Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(4)">Studio Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(5)">Castel Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(6)">Scissor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(7)">Fruits</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="materialEstimationEvent(8)">Toy Bear</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_base.jpg" alt="Albedo">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_meta.jpg" alt="Metallicness">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_rgb.jpg" alt="RGB">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_roug.jpg" alt="Roughness">
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 30px">Lighting Estimation</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            The Neural Incident Light Field (NeILF) learns spatially-varying lighting and handles occlusion, ambient lighting, and multi-bounce reflections.
+            Our physics-based losses improve estimated lighting quality with more concentrated light sources and fewer artifacts.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="lighting-estimation">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="lightingEstimationEvent(0)">City</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="lightingEstimationEvent(1)">Studio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="lightingEstimationEvent(2)">Castel</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="lightingEstimationEvent(3)">City Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="lightingEstimationEvent(4)">Studio Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="lightingEstimationEvent(5)">Castel Mix</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/neilf/city/neilfpp_city_env_neilfpp.jpg" alt="NeILF++ (ICCV 2023)">
+            <img src="assets/neilf/city/neilfpp_city_env_pbrnerf.jpg" alt="PBR-NeRF (Ours)">
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 30px">Geometry Estimation</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            The Signed Distance Function (NeRF SDF) represents smooth surface geometry, which is crucial for physics-based rendering (PBR). Here we visualize the predicted normals.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="geometry-estimation">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="geometryEstimationEvent(0)">Scissor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="geometryEstimationEvent(1)">Fruits</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="geometryEstimationEvent(2)">Toy Bear</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/dtu/DTU_scan37/dtu_37_12_normals_neilfpp.jpg" alt="NeILF++ (ICCV 2023)">
+            <img src="assets/dtu/DTU_scan37/dtu_37_12_normals_pbrnerf.jpg" alt="PBR-NeRF (Ours)">
+          </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Results. -->
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Novel View Synthesis (RGB) Results</h2>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            We render novel views by evaluating the Rendering Equation with our predicted geometry (NeRF SDF), materials (BRDF field), and lighting (NeILF).
+            Our physics-based inverse rendering produces RGB predictions that match or exceed NeILF++ in quality.
+        </h2>
+
+        <div class="container" style="width: 100%;">
+            <ul class="nav nav-tabs nav-fill nav-justified" id="nvs">
+                <li class="nav-item active">
+                  <a class="nav-link" onclick="nvsEvent(0)">Scissor</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="nvsEvent(1)">Fruits</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="nvsEvent(2)">Toy Bear</a>
+                </li>
+            </ul>
+            <div class="video-compare-container">
+                <video class="video" id="dtu" loop playsinline autoPlay muted src="assets/video/dtu_scene_37_rgb_comparison.mp4" onplay="resizeAndPlay(this)"></video>
+                <canvas height=0 class="videoMerge" id="dtuMerge"></canvas>
+            </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Results. -->
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">SOTA Material Estimation</h2>
+
+        <h3 class="title is-5">Albedo</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            Our predicted albedo is more consistent with fewer artifacts caused by shadows or baked-in specular highlights.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="albedo-estimation">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="albedoEstimationEvent(0)">City</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="albedoEstimationEvent(1)">Studio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="albedoEstimationEvent(2)">Castel</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="albedoEstimationEvent(3)">City Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="albedoEstimationEvent(4)">Studio Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="albedoEstimationEvent(5)">Castel Mix</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/neilf/city/neilfpp_neilfpp_city_82_base.jpg" alt="NeILF++ (ICCV 2023)">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_base.jpg" alt="PBR-NeRF (Ours)">
+            <img src="assets/neilf/city/gt_neilfpp_city_82_base.jpg" alt="Ground Truth">
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 30px">Metallicness</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            Our predicted metallicness is more robust to shadows and fringing artifacts.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="metallicness-estimation">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(0)">City</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(1)">Studio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(2)">Castel</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(3)">City Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(4)">Studio Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="metallicnessEstimationEvent(5)">Castel Mix</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/neilf/city/neilfpp_neilfpp_city_82_meta.jpg" alt="NeILF++ (ICCV 2023)">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_meta.jpg" alt="PBR-NeRF (Ours)">
+            <img src="assets/neilf/city/gt_neilfpp_city_82_meta.jpg" alt="Ground Truth">
+          </div>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 30px">Roughness</h3>
+
+        <h2 class="subtitle has-text-left" style="margin-top: 15px">
+            We correctly predict a lower (darker) roughness than NeILF++, reducing overestimated diffuse reflection.
+        </h2>
+
+        <div class="container">
+          <ul class="nav nav-tabs nav-fill nav-justified" id="roughness-estimation">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="roughnessEstimationEvent(0)">City</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="roughnessEstimationEvent(1)">Studio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="roughnessEstimationEvent(2)">Castel</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="roughnessEstimationEvent(3)">City Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="roughnessEstimationEvent(4)">Studio Mix</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="roughnessEstimationEvent(5)">Castel Mix</a>
+              </li>
+          </ul>
+          <div class="b-dics" style="width: 100%; font-weight: 600;">
+            <img src="assets/neilf/city/neilfpp_neilfpp_city_82_roug.jpg" alt="NeILF++ (ICCV 2023)">
+            <img src="assets/neilf/city/pbrnerf_neilfpp_city_82_roug.jpg" alt="PBR-NeRF (Ours)">
+            <img src="assets/neilf/city/gt_neilfpp_city_82_roug.jpg" alt="Ground Truth">
+          </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title" style="margin-top: -60px">BibTeX</h2>
+    <pre><code>@inproceedings{wu2025pbrnerf,
+      title     = {{PBR-NeRF}: Inverse Rendering with Physics-Based Neural Fields},
+      author    = {Wu, Sean and Basu, Shamik and Broedermann, Tim and Van Gool, Luc and Sakaridis, Christos},
+      booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+      year      = {2025}
+}
+    </code></pre>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+      <p align="center">
+            This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            The video comparison with sliding bar is from <a href="https://dorverbin.github.io/refnerf/">Ref-NeRF</a>.
+            The image comparison with sliding bar is from <a href="https://research.nvidia.com/labs/dir/neuralangelo/">Neuralangelo</a>.
+      </p>
+  </div>
+</section>
+
+</body>
+</html>
